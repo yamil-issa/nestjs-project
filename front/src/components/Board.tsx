@@ -1,80 +1,63 @@
-import React from 'react';
-import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import "../styles/BoardPage.css";
+import { useLocation } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
+import axios from "axios";
 
-interface Task {
-  id: number;
-  title: string;
-  description: string;
-  status: string;
-}
+const Board = () => {
+  const location = useLocation();
+  const [userId, setUserId] = useState<string | null>(null);
+  const [tasks, setTasks] = useState<any[]>([]);
+  const [username, setUsername] = useState<string>("");
+  const token = location.state && location.state.token;
 
-const Board: React.FC = () => {
-  const tasks: Task[] = [
-    { id: 1, title: 'Task 1', description: 'Description for Task 1', status: 'todo' },
-    { id: 2, title: 'Task 2', description: 'Description for Task 2', status: 'in-progress' },
-    { id: 3, title: 'Task 3', description: 'Description for Task 3', status: 'done' },
-  ];
-
-  const onDragEnd = async (result: DropResult) => {
-    const { source, destination, draggableId } = result;
-    if (!destination) return;
-    if (source.droppableId === destination.droppableId && source.index === destination.index) return;
-
-    const task = tasks.find((task) => task.id.toString() === draggableId);
-    if (task) {
-      try {
-        await axios.put(`http://localhost:5000/tasks/${task.id}`, { status: destination.droppableId });
-        console.log(`Task ${task.id} moved to ${destination.droppableId}`);
-      } catch (error) {
-        console.error('Failed to update task status:', error);
-      }
+  useEffect(() => {
+    if (token) {
+      const decodedToken: any = jwtDecode(token);
+      const userIdFromToken = decodedToken.userId;
+      const usernameFromToken = decodedToken.username;
+      setUserId(userIdFromToken);
+      setUsername(usernameFromToken);
     }
-  };
+  }, [location.state]);
+
+  useEffect(() => {
+    if (userId) {
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(`http://localhost:5000/tasks/${userId}`);
+          const data = response.data;
+          setTasks(data);
+        } catch (error) {
+          console.error("Error fetching tasks:", error);
+        }
+      };
+      fetchData();
+    }
+  }, [userId]);
 
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <div className="board">
-        <Column title="To Do" tasks={tasks.filter((task) => task.status === 'todo')} />
-        <Column title="In Progress" tasks={tasks.filter((task) => task.status === 'in-progress')} />
-        <Column title="Done" tasks={tasks.filter((task) => task.status === 'done')} />
+    <>
+    <h2>Welcome {username}</h2>
+    <div className="board_container">
+      <div className="todo_column">
+        <h2>Todo</h2>
+        <div className="task_container">
+          {tasks.map((task) => (
+            <div key={task._id} className="task">
+              <h3>{task.title}</h3>
+              <p>{task.description}</p>
+            </div>
+          ))}
+        </div>
       </div>
-    </DragDropContext>
-  );
-};
-
-interface ColumnProps {
-  title: string;
-  tasks: Task[];
-}
-
-const Column: React.FC<ColumnProps> = ({ title, tasks }) => {
-  return (
-    <div className="column">
-      <h3>{title}</h3>
-      <Droppable droppableId={title.toLowerCase()}>
-        {(provided) => (
-          <div ref={provided.innerRef} {...provided.droppableProps}>
-            {tasks.map((task, index) => (
-              <Draggable key={task.id} draggableId={task.id.toString()} index={index}>
-                {(provided) => (
-                  <div
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
-                    className="task"
-                  >
-                    <h4>{task.title}</h4>
-                    <p>{task.description}</p>
-                  </div>
-                )}
-              </Draggable>
-            ))}
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
-    </div>
+      <div className="done_column">
+        <h2>Done</h2>
+        <div className="task_container">
+          {/* Render done tasks here */}
+        </div>
+      </div>
+    </div></>
   );
 };
 

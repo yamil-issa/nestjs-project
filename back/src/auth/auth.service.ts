@@ -8,7 +8,7 @@ export class AuthService {
   private readonly JWT_SECRET = 'your_secret_key';
 
   generateToken(user: User): string {
-    const payload = { username: user.username, email: user.email };
+    const payload = { userId: user._id, username: user.username, email: user.email };
     return jwt.sign(payload, this.JWT_SECRET, { expiresIn: '1h' });
   }
 

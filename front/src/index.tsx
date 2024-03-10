@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './components/Login';
 import Signup from './components/Signup';
-import KanbanBoard from './components/KanbanBoard';
+import Board from './components/Board';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -18,7 +18,7 @@ root.render(
                 <Route path="/" element={<Login />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
-                <Route path="/board" element={<KanbanBoard />} />
+                <Route path="/board" element={<Board />} />
 
             </Routes>
         </Router>

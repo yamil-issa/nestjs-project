@@ -1,4 +1,3 @@
-// src/components/KanbanBoard.tsx
 import React from 'react';
 import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
 import axios from 'axios';
@@ -10,7 +9,7 @@ interface Task {
   status: string;
 }
 
-const KanbanBoard: React.FC = () => {
+const Board: React.FC = () => {
   const tasks: Task[] = [
     { id: 1, title: 'Task 1', description: 'Description for Task 1', status: 'todo' },
     { id: 2, title: 'Task 2', description: 'Description for Task 2', status: 'in-progress' },
@@ -22,7 +21,6 @@ const KanbanBoard: React.FC = () => {
     if (!destination) return;
     if (source.droppableId === destination.droppableId && source.index === destination.index) return;
 
-    // Update task status on server
     const task = tasks.find((task) => task.id.toString() === draggableId);
     if (task) {
       try {
@@ -80,4 +78,4 @@ const Column: React.FC<ColumnProps> = ({ title, tasks }) => {
   );
 };
 
-export default KanbanBoard;
+export default Board;

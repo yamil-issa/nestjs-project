@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-import { Task } from './task.model';
+import { Task } from '../task/task.model';
 
 @Injectable()
 export class TaskService {
   constructor(@InjectModel('Task') private readonly taskModel: Model<Task>) {}
 
-  async findAll(): Promise<Task[]> {
-    return await this.taskModel.find().exec();
+  async findAll(userId: Types.ObjectId): Promise<Task[]> {
+    return await this.taskModel.find({ user: userId }).exec();
   }
 
   async findById(id: string): Promise<Task> {

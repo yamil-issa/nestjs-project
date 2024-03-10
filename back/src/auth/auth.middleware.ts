@@ -1,4 +1,3 @@
-// auth.middleware.ts
 import { Injectable, NestMiddleware, UnauthorizedException } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import { AuthService } from './auth.service';
@@ -13,7 +12,7 @@ export class AuthMiddleware implements NestMiddleware {
       const token = authHeader.substring(7);
       const decodedToken = this.authService.verifyToken(token);
       if (decodedToken) {
-        req.user = decodedToken; // Attach user information to the request object
+        req.user = decodedToken;
         return next();
       }
     }

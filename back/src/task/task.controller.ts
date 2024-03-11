@@ -19,10 +19,10 @@ export class TaskController {
     return this.tasksService.findById(id);
   }
 
-  @Post()
+  @Post(':userId')
   @UseGuards(AuthMiddleware) 
-  async create(@Body() task: Task): Promise<Task> {
-    return this.tasksService.create(task);
+  async create(@Body() task: Task, @Param('userId') userId: string): Promise<Task> {
+    return this.tasksService.create(task, userId);
   }
 
   @Put(':id')

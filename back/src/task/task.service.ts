@@ -15,7 +15,8 @@ export class TaskService {
     return await this.taskModel.findById(id).exec();
   }
 
-  async create(task: Task): Promise<Task> {
+  async create(task: Task, userId: string): Promise<Task> {
+    task.user = new Types.ObjectId(userId);
     const newTask = new this.taskModel(task);
     return await newTask.save();
   }

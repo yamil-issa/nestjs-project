@@ -23,6 +23,8 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 - put the connection string : `MONGODB_CONNECTION_STRING={connection string}`
 - install dependencies : `npm install`
 
+## Tests
+- To run tests use the command : `npm run test`
 ### Run
 To run the back :
 - `cd back/`

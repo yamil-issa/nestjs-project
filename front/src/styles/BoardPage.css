@@ -2,15 +2,27 @@
 h2 {
     margin-bottom: 2rem;
 }
-.board_container {
+.user_block {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-  }
-  
+    gap: 1rem;
+    margin-left: 80%;
+    justify-content: center;
+}
+
+.user_block p {
+font-weight: bold;
+color: #023b5e;
+}
+
+.board_container {
+margin-top: 5rem;
+  display: flex;
+  justify-content: center;
+  gap: 4rem;
+}
+
 .task_container {
-display: flex;
-flex-direction: column;
+
 }
 
 .task {
@@ -23,7 +35,7 @@ background-color: #f9f9f9;
 
 .todo_column,
 .done_column {
-width: 45%;
+width: 25%;
 }
 
 .todo_column {
@@ -35,7 +47,6 @@ background-color: #e0e0e0;
 }
 
 
-/* BoardPage.css */
 
 /* Modal styles */
 .modal {
@@ -49,57 +60,66 @@ background-color: #e0e0e0;
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-  }
-  
-  .modal-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Box shadow */
-    width: 30%;
-  }
+}
 
-  .modal form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    width: 100%;
-  }
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Box shadow */
+  width: 30%;
+}
+
+.modal form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+.close {
+  position: absolute;
+  top: 13rem;
+  right: 30rem;
+  font-size: 25px;
+  font-weight: bold;
+  cursor: pointer;
+}
   
-  .close {
-    position: absolute;
-    top: 13rem;
-    right: 30rem;
-    font-size: 25px;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  
-  /* Button styles */
-  button {
-    background-color: #4caf50; /* Green background */
-    color: white; /* White text */
-    padding: 10px 20px; /* Padding */
-    border: none; /* No border */
-    border-radius: 5px; /* Rounded corners */
-    cursor: pointer; /* Cursor on hover */
-    margin-bottom: 10px; /* Add some space below the button */
-  }
-  
-  button:hover {
-    background-color: #45a049; /* Darker green background on hover */
-  }
-  
-  button:focus {
-    outline: none; /* Remove default focus style */
-  }
+/* Button styles */
+button {
+  background-color: #4caf50; 
+  color: white; 
+  padding: 10px 20px; 
+  border: none; 
+  border-radius: 5px; 
+  cursor: pointer;
+  margin-bottom: 10px; 
+}
+
+button:focus {
+outline: none;
+}
+
+.add_task_button {
+  background: #089bcc;
+  margin-left: 37%;
+}
+
 
 .logout {
-    background-color:  rgb(164, 14, 14);
-    margin-left: 80%;
+    background-color:  #d51b21;
 }
 .logout:hover {
     background-color: red ;
 }
 
   
+.task_button_container {
+  display: flex;
+  gap: 1rem;
+}
+.done_button {
+  background-color: #089bcc;
+
+}

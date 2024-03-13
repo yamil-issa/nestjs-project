@@ -101,8 +101,8 @@ const Board = () => {
   };
   return (
     <>
-     <button className="logout" onClick={handleLogout}>Logout</button>
-      <h2>Welcome {username}</h2>
+     <div className="user_block"><p>{username}</p><button className="logout" onClick={handleLogout}>Logout</button></div>
+      <h2>Your board </h2>
       <div className="board_container">
         <div className="todo_column">
           <h2>Todo</h2>
@@ -112,18 +112,17 @@ const Board = () => {
               .map((task) => (
                 <div key={task._id} className="task">
                   <div>
-                    <input
-                      type="checkbox"
-                      onChange={() => handleTaskCompletion(task._id)}
-                    />
                     <h3>{task.title}</h3>
+                    <p>{task.description}</p>
                   </div>
-                  <p>{task.description}</p>
-                  <button onClick={() => handleDeleteTask(task._id)}>Delete</button>
+                  <div className="task_button_container">
+                    <button className="done_button" onClick={() => handleTaskCompletion(task._id)}>Done</button>
+                    <button onClick={() => handleDeleteTask(task._id)}>Delete</button>
+                  </div>
                 </div>
               ))}
           </div>
-          <button onClick={() => setShowModal(true)}>Add Task</button>
+          <button className="add_task_button" onClick={() => setShowModal(true)}>Add task</button>
           {showModal && (
             <div className="modal">
               <div className="modal-content">

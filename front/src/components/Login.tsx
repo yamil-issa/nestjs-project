@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Link, useNavigate} from 'react-router-dom';
+import { Link, useLocation, useNavigate} from 'react-router-dom';
 import '../styles/LoginPage.css'
 
 const Login = () => {
- 
-
+  const location = useLocation();
+  const successMessage = location.state && location.state.successMessage;
+  console.log("login " + successMessage);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -26,6 +27,7 @@ const Login = () => {
   };
   return (
       <div className="form_container">
+        {successMessage && <p className="success">{successMessage}</p>}
           <h2>Login</h2>
           {error && <p className="error">{error}</p>}
           <form onSubmit={handleSubmit}>

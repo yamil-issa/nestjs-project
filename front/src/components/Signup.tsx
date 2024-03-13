@@ -8,15 +8,13 @@ const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       const response = await axios.post('http://localhost:5000/users/signup', { username, email, password });
-      console.log(response.data);
-      navigate('/login')
+      navigate('/login', { state: { successMessage: response.data.msg } })
 
     } catch (error: any) {
       setError(error.response.data.message)

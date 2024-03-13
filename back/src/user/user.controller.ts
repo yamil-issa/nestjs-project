@@ -1,23 +1,31 @@
-import { Controller, Get, Post, Put, Delete, Param, Body, UseGuards, Request, UnauthorizedException } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Body, UnauthorizedException, BadRequestException } from '@nestjs/common';
 import { UserService } from './user.service';
 import * as bcrypt from 'bcrypt';
 import { AuthService } from 'src/auth/auth.service';
+import { AddUserDto } from './add-user.dto';
 
 @Controller('users')
 export class UserController {
   constructor(private readonly authService: AuthService, private readonly userService: UserService) {}
   //Signup
   @Post('/signup')
-  async addUser(
-    @Body('password') userPassword: string,
-    @Body('email') userEmail: string,
-    @Body('username') userName: string,
-  ) {
+  async addUser(@Body() createUserDto: AddUserDto) {
+    const { username, email, password } = createUserDto;
+
+    // Check for empty fields
+    if (!username || !email || !password) {
+      throw new BadRequestException('All fields are required');
+    }
+
+    // Check for spaces
+    if (username.trim().length === 0 || email.trim().length === 0 || password.trim().length === 0) {
+      throw new BadRequestException('Fields cannot be empty');
+    }
     const saltOrRounds = 10;
-    const hashedPassword = await bcrypt.hash(userPassword, saltOrRounds);
+    const hashedPassword = await bcrypt.hash(password, saltOrRounds);
     const result = await this.userService.createUser(
-      userName,
-      userEmail,
+      username,
+      email,
       hashedPassword,
     );
     return {

@@ -8,6 +8,7 @@ const Login = () => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const navigate = useNavigate()
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -15,19 +16,18 @@ const Login = () => {
     try {
       const response = await axios.post('http://localhost:5000/users/login', { email, password });
       let token = response.data.token;
-      //console.log(response.data);
-      console.log(token);
 
       // Redirect to Kanban page after successful login
       navigate('/board', { state: { token } });
       
-    } catch (error) {
-      console.error('Login failed:', error);
+    } catch (error: any) {
+      setError(error.response.data.message)
     }
   };
   return (
       <div className="form_container">
           <h2>Login</h2>
+          {error && <p className="error">{error}</p>}
           <form onSubmit={handleSubmit}>
               <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
               <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />

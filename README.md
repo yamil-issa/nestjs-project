@@ -20,6 +20,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ### Configuration
 - create a .env
+- put the connection string : `MONGODB_CONNECTION_STRING={connection string}`
 - install dependencies : `npm install`
 
 ### Run
